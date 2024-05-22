@@ -41,7 +41,6 @@ def scraping():
     adapter = HTTPAdapter(max_retries = retry)
     session.mount('http://', adapter)
     session.mount('https://', adapter)
-    # req = requests.get("https://m.imdb.com/chart/top/", headers = header)
     req = session.get("https://m.imdb.com/chart/top/", headers = header)
     main = BeautifulSoup(req.content, 'html.parser')
     for obj in main.find_all('div', {"class" : 'ipc-title ipc-title--base ipc-title--title ipc-title-link-no-icon ipc-title--on-textPrimary sc-b189961a-9 iALATN cli-title'}):
@@ -53,13 +52,11 @@ def scraping():
         dic_in["summery_url"] = 'm.imdb.com/title/' + href_split[2] + '/plotsummary'
         dic_in["title"] = " ".join(update_title[1:])
         dic[title] = dic_in
-        # print(obj.text)
     with open("data.json", "w") as outfile:
         json.dump(dic, outfile)
     with open("data.json", 'r') as ll:
         jsondata = json.load(ll)
     for x in jsondata:
-        # req = requests.get('http://' + jsondata[x]["summery_url"], headers = header)
         req = session.get('http://' + jsondata[x]["summery_url"], headers = header)
         print(req.status_code)
         sleep(1)
@@ -69,7 +66,6 @@ def scraping():
         for sm in plot.find_all('div', {'data-testid' : "sub-section-summaries",'class' : 'sc-f65f65be-0 bBlII'}):
             for pl in sm.find_all('div', {'class' : 'ipc-html-content-inner-div'}):
                 words += remove_stopwords(pl.text)
-        print(words)
         jsondata[x]["summery"] = words
         with open("data.json", 'w') as outfile:
             json.dump(jsondata, outfile)
@@ -90,31 +86,24 @@ def make_matrix_tf():
                 total_count += 1
         for word in temp:
             temp[word] /= total_count
-        # print(temp)
         dic[movie] = temp
     data_frame = pd.DataFrame(dic)
     data_frame = data_frame.fillna(0)
     data_frame = data_frame.astype(float)
-    # print(data_frame)
     return data_frame
 
 
 def make_matrix_idf():
     tf = make_matrix_tf()
-    # print(words)
     dic = dict()
     with open("data.json", 'r') as outfile:
         jsondata = json.load(outfile)
     temp = dict()
-    db = 0
     for word in tf.index:
         count = 0
         for mv in jsondata:
-            # print(tf[mv][word])
             if tf[mv][word]:
                 count += 1
-            print(db)
-            db += 1
         temp[word] = math.log(250.0 / count, 10)
     return temp
 
@@ -123,7 +112,6 @@ def make_matrix_idf():
 def make_matrix_tf_idf():
     tf = make_matrix_tf()
     idf = make_matrix_idf()
-    # print('salam')
     words = tf.index
     dic = dict()
     with open("data.json", 'r') as outfile:
@@ -136,7 +124,6 @@ def make_matrix_tf_idf():
     data_frame = pd.DataFrame(dic)
     data_frame = data_frame.fillna(0)
     data_frame = data_frame.astype(float)
-    # print(data_frame)
     return data_frame
 
 def vectoraziation(vec):
