@@ -158,8 +158,7 @@ def tf_idf_cal(summery):
         tfidf.append(summery.count(word) * idf[word] / total)
     return vectoraziation(tuple(tfidf))
         
-def create_knn_model():
-    pass
+
 
 
 
@@ -168,10 +167,8 @@ def summery_input():
     summery = remove_stopwords(summery)
     KNN(tf_idf_cal(summery))
 
-
 # scraping()
 summery_input()
-create_knn_model()
 
 
 
