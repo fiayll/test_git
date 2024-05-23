@@ -159,8 +159,7 @@ def tf_idf_cal(summery):
     return vectoraziation(tuple(tfidf))
         
 
-def test_git():
-    print("wowwww")
+
 
 
 def summery_input():
@@ -170,7 +169,6 @@ def summery_input():
 
 # scraping()
 summery_input()
-test_git()
 
 
 
