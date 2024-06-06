@@ -42,11 +42,9 @@ plot = remove_stopwords(plot)
 dic['aim'] = plot
 data["plot"] = dic
 ldata = pd.DataFrame(data)
-print(ldata.head())
 tfidfvec = TfidfVectorizer() 
 tfidf_movieid = tfidfvec.fit_transform((ldata["plot"])) 
 cos_sim = cosine_similarity(tfidf_movieid, tfidf_movieid) 
-print(tfidf_movieid)
 
 indices = pd.Series(ldata.index) 
   
