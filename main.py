@@ -146,11 +146,11 @@ def KNN(vec):
     out = 0
     for movie in reversed(sorted_dict):
         out += 1
-        if (out <= 5):
+        if (out <= 6 and out > 1):
             ans = movie.split()
             ans = " ".join(ans[1:])
-            print(f'{out}- {ans}')
-        else:
+            print(f'{out - 1}- {ans}')
+        elif (out > 6):
             break
 def tf_idf_cal(summery):
     tfidf = []
@@ -167,8 +167,15 @@ def tf_idf_cal(summery):
 
 
 def summery_input():
-    summery = input("here:")
+    summery = input("input new summery:")
     summery = remove_stopwords(summery)
+    with open("data.json", 'r') as outfile:
+        jsondata = json.load(outfile)
+    temp = dict()
+    temp['summery'] = summery
+    jsondata['aim'] = temp
+    with open('data.json', 'w') as fl:
+        json.dump(jsondata, fl)
     KNN(tf_idf_cal(summery))
 
 # scraping()
