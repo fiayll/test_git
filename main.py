@@ -147,7 +147,9 @@ def KNN(vec):
     for movie in reversed(sorted_dict):
         out += 1
         if (out <= 5):
-            print(movie)
+            ans = movie.split()
+            ans = " ".join(ans[1:])
+            print(f'{out}- {ans}')
         else:
             break
 def tf_idf_cal(summery):
