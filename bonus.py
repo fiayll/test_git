@@ -33,6 +33,8 @@ with open("data.json", 'r') as outfile:
     jsondata = json.load(outfile)
 dic = dict()
 for movie in jsondata:
+    if movie == 'aim':
+        continue
     s = ""
     for x in jsondata[movie]["summery"]:
         s += x + ' '
