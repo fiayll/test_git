@@ -58,4 +58,5 @@ def recommendations(title, cosine_sim = cos_sim):
     for i in top_5_movies: 
         recommended_movies.append(list(ldata.index)[i]) 
     return recommended_movies 
-print(recommendations('aim'))
+for mv in recommendations('aim'):
+    print(mv)
