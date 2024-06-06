@@ -167,7 +167,7 @@ def tf_idf_cal(summery):
 
 
 def summery_input():
-    summery = input("input new summery:")
+    summery = input("enter a new summery:")
     summery = remove_stopwords(summery)
     with open("data.json", 'r') as outfile:
         jsondata = json.load(outfile)
